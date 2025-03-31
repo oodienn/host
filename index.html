@@ -12,18 +12,23 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            background: linear-gradient(to right, #ff758c, #ff7eb3);
             overflow: hidden;
-            font-family: Arial, sans-serif;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
         }
         .container {
             text-align: center;
             position: relative;
         }
         h1 {
-            font-size: 50px;
+            font-size: 60px;
             color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            animation: bounce 1s infinite alternate;
+        }
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
         }
         .balloons {
             position: absolute;
@@ -33,40 +38,42 @@
         .balloon {
             position: absolute;
             bottom: -100px;
-            width: 50px;
-            height: 70px;
+            width: 60px;
+            height: 80px;
             background-color: red;
             border-radius: 50%;
             animation: floatUp 5s infinite ease-in-out;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
         }
         @keyframes floatUp {
             0% { transform: translateY(0); opacity: 1; }
             100% { transform: translateY(-120vh); opacity: 0; }
         }
         .cake {
-            width: 200px;
-            height: 200px;
+            width: 220px;
+            height: 180px;
             background: pink;
             border-radius: 10px;
             position: relative;
             margin: auto;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
         }
         .candle {
-            width: 10px;
-            height: 40px;
+            width: 15px;
+            height: 50px;
             background: red;
             position: absolute;
-            top: -50px;
+            top: -60px;
             left: 50%;
             transform: translateX(-50%);
         }
         .flame {
-            width: 10px;
-            height: 20px;
+            width: 15px;
+            height: 25px;
             background: orange;
             border-radius: 50%;
             position: absolute;
-            top: -20px;
+            top: -25px;
             left: 50%;
             transform: translateX(-50%);
             animation: flicker 0.5s infinite alternate;
@@ -75,17 +82,30 @@
             0% { opacity: 1; transform: scale(1); }
             100% { opacity: 0.6; transform: scale(1.2); }
         }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: yellow;
+            top: -10px;
+            animation: fall 3s infinite linear;
+        }
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Selamat Ulang Tahun!</h1>
+        <h1>🎉 Selamat Ulang Tahun! 🎈</h1>
         <div class="cake">
             <div class="candle">
                 <div class="flame"></div>
             </div>
         </div>
         <div class="balloons" id="balloons"></div>
+        <div class="confetti-container" id="confetti"></div>
     </div>
     <script>
         function createBalloon() {
@@ -98,6 +118,17 @@
             setTimeout(() => balloon.remove(), 6000);
         }
         setInterval(createBalloon, 500);
+
+        function createConfetti() {
+            const confetti = document.createElement("div");
+            confetti.classList.add("confetti");
+            confetti.style.left = `${Math.random() * 100}%`;
+            confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`;
+            confetti.style.animationDuration = `${2 + Math.random() * 3}s`;
+            document.getElementById("confetti").appendChild(confetti);
+            setTimeout(() => confetti.remove(), 5000);
+        }
+        setInterval(createConfetti, 200);
     </script>
 </body>
 </html>
